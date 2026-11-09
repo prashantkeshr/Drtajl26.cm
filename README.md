@@ -1,4 +1,4 @@
-# dhurta.com
+# drtajl26.cm
 
 Product showcase for the **Dhurta** family — served at [dhurta.com](https://dhurta.com).
 

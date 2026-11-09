@@ -1,23 +1,29 @@
+import CursorGlow from "./components/CursorGlow";
+import EcosystemBanner from "./components/layout/EcosystemBanner";
 import Nav from "./components/Nav";
-import Hero from "./components/Hero";
-import Pillars from "./components/Pillars";
-import ProductsHub from "./components/ProductsHub";
-import BrowserSection from "./components/BrowserSection";
-import ConnectSection from "./components/ConnectSection";
-import SetuSection from "./components/SetuSection";
+import HeroProducts from "./components/HeroProducts";
+import TrustStrip from "./components/TrustStrip";
+import ProductDownloads from "./components/products/ProductDownloads";
+import FeaturesGrid from "./components/FeaturesGrid";
+import PricingSection from "./components/products/PricingSection";
+import DocsPreview from "./components/DocsPreview";
+import SupportHub from "./components/SupportHub";
 import Footer from "./components/Footer";
 
 export default function App() {
   return (
     <>
+      <CursorGlow />
+      <EcosystemBanner />
       <Nav />
       <main>
-        <Hero />
-        <Pillars />
-        <ProductsHub />
-        <BrowserSection />
-        <ConnectSection />
-        <SetuSection />
+        <HeroProducts />
+        <TrustStrip />
+        <ProductDownloads />
+        <FeaturesGrid />
+        <PricingSection />
+        <DocsPreview />
+        <SupportHub />
       </main>
       <Footer />
     </>

@@ -111,10 +111,313 @@ img {
     rgba(255, 255, 255, 0.06),
     rgba(255, 255, 255, 0.02)
   );
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(201, 168, 76, 0.15);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(0, 212, 170, 0.12);
   border-radius: 18px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* ── Hero two-column layout ── */
+.hero-two-col {
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+  padding: 9.5rem 0 5rem;
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+}
+
+.hero-two-col__left {
+  flex: 0 0 58%;
+  max-width: 58%;
+}
+
+.hero-two-col__right {
+  flex: 1;
+  position: relative;
+  height: 55vh;
+  min-height: 420px;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(0, 212, 170, 0.15);
+  box-shadow: 0 0 60px -20px rgba(0, 212, 170, 0.15);
+}
+
+@media (max-width: 768px) {
+  .hero-two-col {
+    flex-direction: column;
+    padding: 8rem 0 3rem;
+    min-height: auto;
+  }
+  .hero-two-col__left {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
+  }
+  .hero-two-col__right {
+    width: 100%;
+    height: 40vh;
+    min-height: 260px;
+    flex: none;
+  }
+}
+
+/* ── Download buttons (hero) ── */
+.hero__download-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.hero__dl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-tech);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: 0.75rem;
+  transition: all 0.22s;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.hero__dl-btn--primary {
+  background: var(--teal);
+  color: var(--black);
+  box-shadow: 0 0 24px rgba(0, 212, 170, 0.4);
+}
+
+.hero__dl-btn--primary:hover {
+  background: rgba(0, 212, 170, 0.88);
+  box-shadow: 0 0 40px rgba(0, 212, 170, 0.6);
+  transform: translateY(-1px);
+}
+
+.hero__dl-btn--ghost {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--white);
+}
+
+.hero__dl-btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(0, 212, 170, 0.4);
+  color: var(--teal);
+}
+
+.hero__dl-btn--highlighted {
+  outline: 2px solid rgba(0, 212, 170, 0.6);
+  outline-offset: 2px;
+}
+
+/* ── Trust strip ── */
+.trust-strip {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 1.2rem 0;
+  background: rgba(10, 22, 40, 0.5);
+}
+
+.trust-strip__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--gray-light);
+  opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+  .trust-strip__inner {
+    gap: 1rem;
+  }
+}
+
+/* ── Feature chips ── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  font-family: var(--font-tech);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.chip--teal {
+  background: rgba(0, 212, 170, 0.12);
+  border: 1px solid rgba(0, 212, 170, 0.28);
+  color: var(--teal);
+}
+
+.chip--gold {
+  background: rgba(201, 168, 76, 0.12);
+  border: 1px solid rgba(201, 168, 76, 0.28);
+  color: var(--gold);
+}
+
+.chip--blue {
+  background: rgba(74, 158, 255, 0.12);
+  border: 1px solid rgba(74, 158, 255, 0.28);
+  color: var(--blue);
+}
+
+/* ── Glow helpers ── */
+.glow-teal {
+  box-shadow: 0 8px 40px -12px rgba(0, 212, 170, 0.5), 0 0 0 1px rgba(0, 212, 170, 0.15);
+}
+
+.glow-gold {
+  box-shadow: 0 8px 40px -12px rgba(201, 168, 76, 0.5), 0 0 0 1px rgba(201, 168, 76, 0.15);
+}
+
+.glow-blue {
+  box-shadow: 0 8px 40px -12px rgba(74, 158, 255, 0.5), 0 0 0 1px rgba(74, 158, 255, 0.15);
+}
+
+/* ── Feature grid ── */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Docs two-column ── */
+.docs-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .docs-two-col {
+    grid-template-columns: 1fr;
+  }
+  .docs-code-col {
+    display: none;
+  }
+}
+
+/* ── Code block ── */
+.code-block {
+  background: rgba(5, 13, 26, 0.95);
+  border: 1px solid rgba(74, 158, 255, 0.2);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.code-block__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  background: rgba(10, 22, 40, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.code-block__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.code-block__body {
+  padding: 1.25rem;
+  line-height: 1.8;
+  overflow-x: auto;
+}
+
+/* ── Pricing ── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    overflow-x: auto;
+  }
+}
+
+/* ── Newsletter ── */
+.newsletter-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.newsletter-form__input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 0.6rem 1rem;
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.newsletter-form__input:focus {
+  border-color: rgba(0, 212, 170, 0.4);
+}
+
+.newsletter-form__input::placeholder {
+  color: rgba(184, 197, 214, 0.5);
+}
+
+.newsletter-form__btn {
+  background: var(--teal);
+  color: var(--black);
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1.2rem;
+  font-family: var(--font-tech);
+  font-weight: 600;
+  font-size: 0.84rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.newsletter-form__btn:hover {
+  background: rgba(0, 212, 170, 0.85);
 }
 
 .bg-noise::before {

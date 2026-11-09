@@ -1,153 +1,124 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Stars, Trail } from "@react-three/drei";
+import { Stars, MeshDistortMaterial } from "@react-three/drei";
 import { Suspense, useMemo, useRef } from "react";
 import * as THREE from "three";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
 const GOLD = "#c9a84c";
 const TEAL = "#00d4aa";
-const SAFFRON = "#ff4500";
 
-/** Slowly rotating wireframe "chakra" — nested rings + icosahedron core. */
-function Chakra() {
-  const group = useRef<THREE.Group>(null);
-  const core = useRef<THREE.Mesh>(null);
+function BrowserFrame() {
+  const groupRef = useRef<THREE.Group>(null);
 
-  useFrame(({ clock, pointer }) => {
-    const t = clock.elapsedTime;
-    if (group.current) {
-      group.current.rotation.y = t * 0.12;
-      group.current.rotation.x =
-        Math.sin(t * 0.2) * 0.15 + pointer.y * 0.18;
-      group.current.rotation.z = pointer.x * 0.12;
-    }
-    if (core.current) {
-      core.current.rotation.x = t * 0.35;
-      core.current.rotation.y = -t * 0.28;
-      const s = 1 + Math.sin(t * 1.4) * 0.045;
-      core.current.scale.setScalar(s);
+  useFrame(({ clock }) => {
+    if (groupRef.current) {
+      groupRef.current.position.y = Math.sin(clock.elapsedTime * 0.8) * 0.15;
     }
   });
 
   return (
-    <group ref={group}>
-      {/* golden outer rings at three inclinations */}
-      {[0, 1, 2].map((i) => (
-        <mesh key={i} rotation={[(Math.PI / 3) * i, (Math.PI / 5) * i, 0]}>
-          <torusGeometry args={[2.6 + i * 0.18, 0.012, 8, 128]} />
-          <meshBasicMaterial
-            color={i === 1 ? TEAL : GOLD}
-            transparent
-            opacity={0.55 - i * 0.1}
-          />
-        </mesh>
-      ))}
-      {/* wire core */}
-      <mesh ref={core}>
-        <icosahedronGeometry args={[1.35, 1]} />
-        <meshBasicMaterial color={GOLD} wireframe transparent opacity={0.5} />
+    <group ref={groupRef}>
+      <mesh position={[-1.2, 0, 0]}>
+        <boxGeometry args={[0.05, 2.4, 0.05]} />
+        <meshStandardMaterial color={GOLD} metalness={0.9} roughness={0.1} />
       </mesh>
-      {/* inner glow sphere */}
-      <mesh>
-        <sphereGeometry args={[0.85, 32, 32]} />
-        <meshBasicMaterial color={SAFFRON} transparent opacity={0.08} />
+      <mesh position={[1.2, 0, 0]}>
+        <boxGeometry args={[0.05, 2.4, 0.05]} />
+        <meshStandardMaterial color={GOLD} metalness={0.9} roughness={0.1} />
+      </mesh>
+      <mesh position={[0, 1.2, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <boxGeometry args={[0.05, 2.4, 0.05]} />
+        <meshStandardMaterial color={GOLD} metalness={0.9} roughness={0.1} />
+      </mesh>
+      <mesh position={[0, -1.2, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <boxGeometry args={[0.05, 2.4, 0.05]} />
+        <meshStandardMaterial color={GOLD} metalness={0.9} roughness={0.1} />
       </mesh>
     </group>
   );
 }
 
-/** Ring of orbiting particles, like a data halo. */
-function Halo({ radius = 3.4, count = 900 }: { radius?: number; count?: number }) {
-  const points = useRef<THREE.Points>(null);
-  const positions = useMemo(() => {
-    const arr = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      const a = Math.random() * Math.PI * 2;
-      const r = radius + (Math.random() - 0.5) * 0.9;
-      arr[i * 3] = Math.cos(a) * r;
-      arr[i * 3 + 1] = (Math.random() - 0.5) * 0.35;
-      arr[i * 3 + 2] = Math.sin(a) * r;
-    }
-    return arr;
-  }, [radius, count]);
-
-  useFrame(({ clock }) => {
-    if (points.current) {
-      points.current.rotation.y = clock.elapsedTime * 0.05;
-      points.current.rotation.x = -0.35;
-    }
-  });
+function ShieldGlyph() {
+  const shape = useMemo(() => {
+    const s = new THREE.Shape();
+    s.moveTo(0, 1.0);
+    s.lineTo(0.65, 0.65);
+    s.lineTo(0.65, -0.05);
+    s.lineTo(0, -0.9);
+    s.lineTo(-0.65, -0.05);
+    s.lineTo(-0.65, 0.65);
+    s.closePath();
+    return s;
+  }, []);
 
   return (
-    <points ref={points}>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
-      </bufferGeometry>
-      <pointsMaterial
-        color={TEAL}
-        size={0.02}
-        sizeAttenuation
+    <mesh position={[0, 0, -0.15]}>
+      <shapeGeometry args={[shape]} />
+      <MeshDistortMaterial
+        color={GOLD}
+        distort={0.1}
+        metalness={0.95}
+        roughness={0.05}
         transparent
-        opacity={0.7}
-        depthWrite={false}
+        opacity={0.8}
       />
-    </points>
+    </mesh>
   );
 }
 
-/** A comet with a golden trail orbiting the chakra — the "clever" spark. */
-function Comet() {
-  const mesh = useRef<THREE.Mesh>(null);
+function OrbitCube({
+  period,
+  offset,
+  color,
+  inclination,
+}: {
+  period: number;
+  offset: number;
+  color: string;
+  inclination: number;
+}) {
+  const ref = useRef<THREE.Mesh>(null);
+
   useFrame(({ clock }) => {
-    const t = clock.elapsedTime * 0.55;
-    if (mesh.current) {
-      mesh.current.position.set(
-        Math.cos(t) * 3.3,
-        Math.sin(t * 1.7) * 0.7,
-        Math.sin(t) * 3.3
-      );
+    if (!ref.current) return;
+    const angle = (clock.elapsedTime * Math.PI * 2) / period + offset;
+    const r = 2.8;
+    ref.current.position.x = r * Math.cos(angle);
+    if (inclination === 0) {
+      ref.current.position.y = 0;
+      ref.current.position.z = r * Math.sin(angle);
+    } else {
+      ref.current.position.y = r * Math.sin(angle) * Math.sin(inclination);
+      ref.current.position.z = r * Math.sin(angle) * Math.cos(inclination);
     }
+    ref.current.rotation.x += 0.015;
+    ref.current.rotation.y += 0.02;
   });
+
   return (
-    <Trail width={1.4} length={7} color={GOLD} attenuation={(w) => w * w}>
-      <mesh ref={mesh}>
-        <sphereGeometry args={[0.055, 16, 16]} />
-        <meshBasicMaterial color="#ffe9b0" />
-      </mesh>
-    </Trail>
+    <mesh ref={ref}>
+      <boxGeometry args={[0.18, 0.18, 0.18]} />
+      <meshStandardMaterial color={color} metalness={0.8} roughness={0.2} />
+    </mesh>
   );
 }
 
-/** Drifting angular shards — vector-glass debris in brand colors. */
-function Shards() {
-  const shards = useMemo(
-    () =>
-      Array.from({ length: 9 }, (_, i) => ({
-        pos: [
-          (Math.random() - 0.5) * 11,
-          (Math.random() - 0.5) * 6,
-          -2 - Math.random() * 4,
-        ] as [number, number, number],
-        rot: [Math.random() * Math.PI, Math.random() * Math.PI, 0] as [
-          number,
-          number,
-          number
-        ],
-        scale: 0.16 + Math.random() * 0.3,
-        color: [GOLD, TEAL, SAFFRON][i % 3],
-        speed: 0.6 + Math.random() * 1.6,
-      })),
-    []
-  );
+function OrbitingCubes() {
+  const configs = [
+    { period: 3, offset: 0, color: GOLD, inclination: 0 },
+    { period: 3, offset: Math.PI / 2, color: TEAL, inclination: 0 },
+    { period: 3, offset: Math.PI, color: GOLD, inclination: 0 },
+    { period: 3, offset: (3 * Math.PI) / 2, color: TEAL, inclination: 0 },
+    { period: 5, offset: 0, color: GOLD, inclination: Math.PI / 6 },
+    { period: 5, offset: Math.PI / 2, color: TEAL, inclination: Math.PI / 6 },
+    { period: 5, offset: Math.PI, color: GOLD, inclination: Math.PI / 6 },
+    { period: 5, offset: (3 * Math.PI) / 2, color: TEAL, inclination: Math.PI / 6 },
+  ];
 
   return (
     <>
-      {shards.map((s, i) => (
-        <Float key={i} speed={s.speed} rotationIntensity={1.4} floatIntensity={1.8}>
-          <mesh position={s.pos} rotation={s.rot} scale={s.scale}>
-            <octahedronGeometry args={[1, 0]} />
-            <meshBasicMaterial color={s.color} wireframe transparent opacity={0.35} />
-          </mesh>
-        </Float>
+      {configs.map((cfg, i) => (
+        <OrbitCube key={i} {...cfg} />
       ))}
     </>
   );
@@ -155,8 +126,8 @@ function Shards() {
 
 function Rig() {
   useFrame(({ camera, pointer }) => {
-    camera.position.x += (pointer.x * 0.6 - camera.position.x) * 0.04;
-    camera.position.y += (pointer.y * 0.35 + 0.2 - camera.position.y) * 0.04;
+    camera.position.x += (pointer.x * 0.4 - camera.position.x) * 0.03;
+    camera.position.y += (pointer.y * 0.3 - camera.position.y) * 0.03;
     camera.lookAt(0, 0, 0);
   });
   return null;
@@ -167,16 +138,23 @@ export default function HeroScene({ active = true }: { active?: boolean }) {
     <Canvas
       dpr={[1, 1.5]}
       frameloop={active ? "always" : "never"}
-      camera={{ position: [0, 0.2, 7.5], fov: 45 }}
+      camera={{ position: [0, 0, 8], fov: 45 }}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       style={{ position: "absolute", inset: 0 }}
     >
       <Suspense fallback={null}>
+        <ambientLight intensity={0.4} />
+        <pointLight position={[5, 5, 5]} intensity={1.2} color="#E8D5A3" />
+        <pointLight position={[-5, -3, -4]} intensity={0.8} color="#4A9EFF" />
+
         <Stars radius={60} depth={40} count={1800} factor={3} saturation={0} fade speed={0.6} />
-        <Chakra />
-        <Halo />
-        <Comet />
-        <Shards />
+        <BrowserFrame />
+        <ShieldGlyph />
+        <OrbitingCubes />
+
+        <EffectComposer>
+          <Bloom luminanceThreshold={0.4} intensity={0.7} />
+        </EffectComposer>
         <Rig />
       </Suspense>
     </Canvas>
