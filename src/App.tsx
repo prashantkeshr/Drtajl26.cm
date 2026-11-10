@@ -1,5 +1,4 @@
 import CursorGlow from "./components/CursorGlow";
-import EcosystemBanner from "./components/layout/EcosystemBanner";
 import Nav from "./components/Nav";
 import HeroProducts from "./components/HeroProducts";
 import TrustStrip from "./components/TrustStrip";
@@ -14,7 +13,6 @@ export default function App() {
   return (
     <>
       <CursorGlow />
-      <EcosystemBanner />
       <Nav />
       <main>
         <HeroProducts />
