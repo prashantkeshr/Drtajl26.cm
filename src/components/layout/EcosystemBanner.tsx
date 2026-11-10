@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { X } from "lucide-react";
 
 export default function EcosystemBanner() {
   const [dismissed, setDismissed] = useState(false);
@@ -47,12 +48,12 @@ export default function EcosystemBanner() {
       </a>
       <button
         onClick={() => setDismissed(true)}
-        style={{ marginLeft: "1rem", color: "var(--gray-dark)", fontSize: "1rem", lineHeight: 1 }}
+        style={{ marginLeft: "1rem", color: "var(--gray-dark)", display: "flex", alignItems: "center" }}
         onMouseEnter={(e) => { e.currentTarget.style.color = "var(--white)"; }}
         onMouseLeave={(e) => { e.currentTarget.style.color = "var(--gray-dark)"; }}
         aria-label="Dismiss banner"
       >
-        ✕
+        <X size={15} strokeWidth={2} />
       </button>
     </div>
   );

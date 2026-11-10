@@ -5,7 +5,7 @@ import HeroProducts from "./components/HeroProducts";
 import TrustStrip from "./components/TrustStrip";
 import ProductDownloads from "./components/products/ProductDownloads";
 import FeaturesGrid from "./components/FeaturesGrid";
-import PricingSection from "./components/products/PricingSection";
+import ManifestoSection from "./components/ManifestoSection";
 import DocsPreview from "./components/DocsPreview";
 import SupportHub from "./components/SupportHub";
 import Footer from "./components/Footer";
@@ -21,7 +21,7 @@ export default function App() {
         <TrustStrip />
         <ProductDownloads />
         <FeaturesGrid />
-        <PricingSection />
+        <ManifestoSection />
         <DocsPreview />
         <SupportHub />
       </main>

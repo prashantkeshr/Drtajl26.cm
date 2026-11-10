@@ -1,42 +1,51 @@
 import { motion } from "framer-motion";
+import { type LucideIcon, ShieldCheck, CloudOff, Code2, Monitor, UserX, Server } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const FEATURES = [
+type Feature = { icon: LucideIcon; title: string; desc: string; color: string; bg: string };
+
+const FEATURES: Feature[] = [
   {
-    icon: "🛡",
+    icon: ShieldCheck,
     title: "Encrypted by Default",
     desc: "Every connection, every file, every session — encrypted without configuration.",
+    color: "var(--teal)",
     bg: "rgba(0, 212, 170, 0.1)",
   },
   {
-    icon: "☁",
+    icon: CloudOff,
     title: "No Cloud Dependency",
     desc: "P2P-first. No relay servers. Your data never touches infrastructure you don't own.",
+    color: "var(--blue)",
     bg: "rgba(74, 158, 255, 0.1)",
   },
   {
-    icon: "</>",
+    icon: Code2,
     title: "Open Source",
     desc: "Full source on GitHub. Audit it. Fork it. Contribute to it.",
+    color: "var(--gold)",
     bg: "rgba(201, 168, 76, 0.1)",
   },
   {
-    icon: "💻",
+    icon: Monitor,
     title: "Cross-Platform",
     desc: "Windows, macOS, Linux. One codebase, full feature parity across every OS.",
+    color: "var(--teal)",
     bg: "rgba(0, 212, 170, 0.1)",
   },
   {
-    icon: "🚫",
+    icon: UserX,
     title: "Zero Accounts Needed",
     desc: "No email. No sign-up. No identity linked to your usage.",
+    color: "var(--blue)",
     bg: "rgba(74, 158, 255, 0.1)",
   },
   {
-    icon: "🏠",
+    icon: Server,
     title: "Self-Hostable",
     desc: "Run your own relay for Setu and Connect. Full deployment guides included.",
+    color: "var(--gold)",
     bg: "rgba(201, 168, 76, 0.1)",
   },
 ];
@@ -76,11 +85,10 @@ export default function FeaturesGrid() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "1.3rem",
                 marginBottom: "1.1rem",
-                fontFamily: "var(--font-mono)",
+                color: f.color,
               }}>
-                {f.icon}
+                <f.icon size={22} strokeWidth={1.5} />
               </div>
               <h3 style={{
                 fontFamily: "var(--font-tech)",

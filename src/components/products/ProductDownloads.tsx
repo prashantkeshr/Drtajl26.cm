@@ -1,48 +1,57 @@
 import { motion } from "framer-motion";
+import { type LucideIcon, Compass, MessageSquare, Search, Code2, ArrowUpRight } from "lucide-react";
 import TiltCard from "../ui/TiltCard";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const PRODUCTS = [
+type Product = {
+  id: string;
+  name: string;
+  icon: LucideIcon;
+  desc: string;
+  accent: string;
+  chipClass: string;
+  chips: string[];
+  github: string;
+  subdomain: string;
+  version: string;
+};
+
+const PRODUCTS: Product[] = [
   {
     id: "browser",
     name: "Dhurta Browser",
-    icon: "🔱",
-    desc: "Zero-telemetry sovereign browser with real Tor Ghost Mode, Chakra Shield VPN bundle, and Omni self-audit dashboard.",
+    icon: Compass,
+    desc: "A sovereign browser with Tor Ghost Mode, Chakra Shield routing, and Omni self-audit dashboard. Zero telemetry by design.",
     accent: "#00d4aa",
     chipClass: "chip--teal",
     chips: ["Ghost Mode", "Tor Routing", "Zero Telemetry", "Kill Switch"],
-    buttons: [
-      { label: "Windows", href: "https://github.com/prashantkeshr/drtajl26.n/releases", size: "84 MB" },
-      { label: "macOS", href: "https://github.com/prashantkeshr/drtajl26.n/releases", size: "91 MB" },
-      { label: "Linux", href: "https://github.com/prashantkeshr/drtajl26.n/releases", size: "78 MB" },
-    ],
+    github: "https://github.com/prashantkeshr/drtajl26.n",
+    subdomain: "https://browser.dhurta.com",
     version: "v1.0.0",
   },
   {
     id: "connect",
     name: "Dhurta Connect",
-    icon: "💬",
-    desc: "Zero-server end-to-end encrypted P2P chat, voice and video calls, and file sharing. Pair with a short code — no accounts.",
+    icon: MessageSquare,
+    desc: "End-to-end encrypted P2P chat, voice, video and file sharing. Pair two devices with a short code — no server, no accounts.",
     accent: "#c9a84c",
     chipClass: "chip--gold",
-    chips: ["P2P Encrypted", "No Server", "Short-code Pairing"],
-    buttons: [
-      { label: "Download P2P Client", href: "https://connect.dhurta.com", size: "52 MB" },
-    ],
+    chips: ["P2P Encrypted", "No Server", "Short-code Pairing", "E2E by Default"],
+    github: "https://github.com/prashantkeshr/drtajl26.n",
+    subdomain: "https://connect.dhurta.com",
     version: "v1.0.0",
   },
   {
     id: "setu",
     name: "Dhurta Setu",
-    icon: "⌕",
-    desc: "Hand-curated web index and first-party private search engine. No ad auctions, no tracking, no algorithms.",
+    icon: Search,
+    desc: "A hand-curated web index and private search engine. No ad auctions, no tracking, no algorithmic manipulation.",
     accent: "#4a9eff",
     chipClass: "chip--blue",
-    chips: ["No Tracking", "Open Index", "No Ads"],
-    buttons: [
-      { label: "Download Bridge Tool", href: "https://setu.dhurta.com", size: "36 MB" },
-    ],
+    chips: ["No Tracking", "Open Index", "No Ads", "Curated Web"],
+    github: "https://github.com/prashantkeshr/drtajl26.n",
+    subdomain: "https://setu.dhurta.com",
     version: "v1.0.0",
   },
 ];
@@ -51,12 +60,12 @@ export default function ProductDownloads() {
   return (
     <section id="downloads" style={{ padding: "7rem 0", background: "var(--navy)" }}>
       <div className="container">
-        <p className="section-label" style={{ color: "var(--teal)", marginBottom: "1rem" }}>Downloads</p>
+        <p className="section-label" style={{ color: "var(--teal)", marginBottom: "1rem" }}>The Ecosystem</p>
         <h2 className="section-title" style={{ marginBottom: "0.75rem" }}>
           Three tools. One mission.
         </h2>
         <p style={{ color: "var(--gray-light)", maxWidth: "36rem", marginBottom: "3.5rem", lineHeight: 1.65 }}>
-          Enterprise-grade privacy tools engineered for professionals. Open-source. Zero telemetry. Sovereign.
+          Independently useful, deeply integrated. Each tool is free, open-source, and built on the same principle — you are in control.
         </p>
 
         <div style={{
@@ -93,7 +102,19 @@ export default function ProductDownloads() {
                     alignItems: "center",
                     justifyContent: "space-between",
                   }}>
-                    <span style={{ fontSize: "2.4rem" }}>{p.icon}</span>
+                    <div style={{
+                      width: "52px",
+                      height: "52px",
+                      borderRadius: "0.875rem",
+                      background: `${p.accent}18`,
+                      border: `1px solid ${p.accent}30`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: p.accent,
+                    }}>
+                      <p.icon size={24} strokeWidth={1.5} />
+                    </div>
                     <div style={{ textAlign: "right" }}>
                       <h3 style={{
                         fontFamily: "var(--font-tech)",
@@ -138,7 +159,7 @@ export default function ProductDownloads() {
                       ))}
                     </div>
 
-                    {/* Download buttons */}
+                    {/* Action links */}
                     <div style={{
                       display: "flex",
                       flexWrap: "wrap",
@@ -146,45 +167,66 @@ export default function ProductDownloads() {
                       marginTop: "auto",
                       paddingTop: "0.5rem",
                     }}>
-                      {p.buttons.map((btn) => (
-                        <a
-                          key={btn.label}
-                          href={btn.href}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: "0.4rem",
-                            padding: "0.5rem 1rem",
-                            borderRadius: "999px",
-                            background: `${p.accent}18`,
-                            border: `1px solid ${p.accent}40`,
-                            color: p.accent,
-                            fontFamily: "var(--font-tech)",
-                            fontSize: "0.8rem",
-                            fontWeight: 500,
-                            transition: "background 0.2s, transform 0.2s",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.background = `${p.accent}30`;
-                            e.currentTarget.style.transform = "translateY(-1px)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.background = `${p.accent}18`;
-                            e.currentTarget.style.transform = "";
-                          }}
-                        >
-                          ↓ {btn.label}
-                          <span style={{
-                            fontSize: "0.65rem",
-                            color: "var(--gray-light)",
-                            opacity: 0.7,
-                          }}>
-                            {btn.size}
-                          </span>
-                        </a>
-                      ))}
+                      <a
+                        href={p.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "0.45rem",
+                          padding: "0.5rem 1.1rem",
+                          borderRadius: "999px",
+                          background: `${p.accent}18`,
+                          border: `1px solid ${p.accent}40`,
+                          color: p.accent,
+                          fontFamily: "var(--font-tech)",
+                          fontSize: "0.8rem",
+                          fontWeight: 500,
+                          transition: "background 0.2s, transform 0.2s",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = `${p.accent}30`;
+                          e.currentTarget.style.transform = "translateY(-1px)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = `${p.accent}18`;
+                          e.currentTarget.style.transform = "";
+                        }}
+                      >
+                        <Code2 size={13} strokeWidth={2} />
+                        View on GitHub
+                      </a>
+                      <a
+                        href={p.subdomain}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "0.4rem",
+                          padding: "0.5rem 1.1rem",
+                          borderRadius: "999px",
+                          background: "transparent",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                          color: "var(--gray-light)",
+                          fontFamily: "var(--font-tech)",
+                          fontSize: "0.8rem",
+                          fontWeight: 500,
+                          transition: "border-color 0.2s, transform 0.2s",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
+                          e.currentTarget.style.transform = "translateY(-1px)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                          e.currentTarget.style.transform = "";
+                        }}
+                      >
+                        Learn more
+                        <ArrowUpRight size={12} strokeWidth={2} />
+                      </a>
                     </div>
                   </div>
                 </div>

@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { type LucideIcon, Mail, Users, MessageCircle, ShieldAlert, ChevronDown, ArrowRight } from "lucide-react";
+
+type ContactItem = { label: string; href: string; icon: LucideIcon };
 
 const FAQS = [
   {
@@ -24,11 +27,11 @@ const FAQS = [
   },
 ];
 
-const CONTACT = [
-  { label: "General support", href: "mailto:support@dhurta.org", icon: "✉️" },
-  { label: "Enterprise sales", href: "mailto:enterprise@dhurta.org", icon: "🤝" },
-  { label: "GitHub Issues", href: "https://github.com/prashantkeshr/drtajl26.n/issues", icon: "🐛" },
-  { label: "Security disclosure", href: "mailto:security@dhurta.org", icon: "🔒" },
+const CONTACT: ContactItem[] = [
+  { label: "General support", href: "mailto:support@dhurta.org", icon: Mail },
+  { label: "Partnerships & research", href: "mailto:hello@dhurta.org", icon: Users },
+  { label: "GitHub Issues", href: "https://github.com/prashantkeshr/drtajl26.n/issues", icon: MessageCircle },
+  { label: "Security disclosure", href: "mailto:security@dhurta.org", icon: ShieldAlert },
 ];
 
 export default function SupportHub() {
@@ -79,9 +82,13 @@ export default function SupportHub() {
                     }}
                   >
                     <span>{faq.q}</span>
-                    <span style={{ color: "var(--teal)", fontSize: "1.1rem", flexShrink: 0 }}>
-                      {openIndex === i ? "−" : "+"}
-                    </span>
+                    <motion.span
+                      animate={{ rotate: openIndex === i ? 180 : 0 }}
+                      transition={{ duration: 0.25 }}
+                      style={{ color: "var(--teal)", flexShrink: 0, display: "flex" }}
+                    >
+                      <ChevronDown size={17} strokeWidth={1.75} />
+                    </motion.span>
                   </button>
                   {openIndex === i && (
                     <div style={{
@@ -136,9 +143,9 @@ export default function SupportHub() {
                     e.currentTarget.style.background = "rgba(10,22,40,0.6)";
                   }}
                 >
-                  <span style={{ fontSize: "1.1rem" }}>{item.icon}</span>
+                  <item.icon size={17} strokeWidth={1.5} style={{ color: "var(--gold)", flexShrink: 0 }} />
                   {item.label}
-                  <span style={{ marginLeft: "auto", color: "var(--gray-dark)" }}>→</span>
+                  <ArrowRight size={15} strokeWidth={1.5} style={{ marginLeft: "auto", color: "var(--gray-dark)" }} />
                 </motion.a>
               ))}
             </div>

@@ -1,30 +1,14 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
+import { ArrowDown, ExternalLink } from "lucide-react";
 import HeroScene from "../three/HeroScene";
 import "./Hero.css";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const DL_URL = "https://github.com/prashantkeshr/drtajl26.n/releases";
-
-type OS = "windows" | "mac" | "linux" | null;
-
-const OS_BUTTONS: { label: string; os: Exclude<OS, null>; icon: string; primary: boolean }[] = [
-  { label: "Windows", os: "windows", icon: "⊞", primary: true },
-  { label: "macOS", os: "mac", icon: "", primary: false },
-  { label: "Linux", os: "linux", icon: "🐧", primary: false },
-];
 
 export default function HeroProducts() {
   const ref = useRef<HTMLElement>(null);
   const heroVisible = useInView(ref, { amount: 0.05 });
-  const [platform, setPlatform] = useState<OS>(null);
-
-  useEffect(() => {
-    const ua = navigator.userAgent;
-    if (/Win/.test(ua)) setPlatform("windows");
-    else if (/Mac/.test(ua)) setPlatform("mac");
-    else setPlatform("linux");
-  }, []);
 
   return (
     <section className="hero" id="top" ref={ref}>
@@ -37,7 +21,7 @@ export default function HeroProducts() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: EASE }}
           >
-            FREE · OPEN SOURCE · SECURE
+            DHURTA — धूर्त, CLEVER
           </motion.p>
 
           <h1 className="hero__title">
@@ -47,7 +31,7 @@ export default function HeroProducts() {
                 animate={{ y: "0%" }}
                 transition={{ duration: 0.9, delay: 0.25, ease: EASE }}
               >
-                Build Secure.
+                A different kind
               </motion.span>
             </span>
             <span className="hero__line">
@@ -57,7 +41,7 @@ export default function HeroProducts() {
                 animate={{ y: "0%" }}
                 transition={{ duration: 0.9, delay: 0.37, ease: EASE }}
               >
-                Work Free.
+                of internet.
               </motion.span>
             </span>
           </h1>
@@ -68,40 +52,42 @@ export default function HeroProducts() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.55, ease: EASE }}
           >
-            Three tools. Zero surveillance. Full control.
+            Three open-source tools. One conviction — your data belongs to you, not to platforms.
           </motion.p>
 
           <motion.div
-            className="hero__download-row"
+            style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "2rem" }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7, ease: EASE }}
           >
-            {OS_BUTTONS.map(({ label, os, icon, primary }) => (
-              <a
-                key={os}
-                href={DL_URL}
-                target="_blank"
-                rel="noreferrer"
-                className={[
-                  "hero__dl-btn",
-                  primary ? "hero__dl-btn--primary" : "hero__dl-btn--ghost",
-                  platform === os ? "hero__dl-btn--highlighted" : "",
-                ].filter(Boolean).join(" ")}
-              >
-                <span>{icon}</span>
-                {label}
-              </a>
-            ))}
+            <a
+              href="#products"
+              className="hero__dl-btn hero__dl-btn--primary"
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
+            >
+              Explore the ecosystem
+              <ArrowDown size={15} />
+            </a>
+            <a
+              href="https://github.com/prashantkeshr/drtajl26.n"
+              target="_blank"
+              rel="noreferrer"
+              className="hero__dl-btn hero__dl-btn--ghost"
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
+            >
+              <ExternalLink size={14} />
+              GitHub
+            </a>
           </motion.div>
 
           <motion.div
-            style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", marginTop: "1.6rem" }}
+            style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", marginTop: "1.8rem" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.0 }}
           >
-            {["10K+ downloads", "MIT License", "Zero telemetry"].map((t) => (
+            {["MIT License", "Zero telemetry", "No accounts"].map((t) => (
               <span
                 key={t}
                 style={{
@@ -109,7 +95,7 @@ export default function HeroProducts() {
                   fontSize: "0.7rem",
                   letterSpacing: "0.08em",
                   color: "var(--gray-light)",
-                  opacity: 0.72,
+                  opacity: 0.6,
                 }}
               >
                 {t}

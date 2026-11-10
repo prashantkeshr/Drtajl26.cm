@@ -1,31 +1,34 @@
 import { motion } from "framer-motion";
+import { type LucideIcon, BookOpen, ListChecks, Terminal, ShieldAlert } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const LINKS = [
+type DocLink = { label: string; desc: string; href: string; icon: LucideIcon };
+
+const LINKS: DocLink[] = [
   {
     label: "Documentation",
     desc: "Setup guides, feature docs, API reference.",
     href: "https://docs.dhurta.com",
-    icon: "📖",
+    icon: BookOpen,
   },
   {
     label: "Changelog",
     desc: "What's new in every release.",
     href: "https://github.com/prashantkeshr/drtajl26.n/releases",
-    icon: "📋",
+    icon: ListChecks,
   },
   {
     label: "API Reference",
-    desc: "Integration guides for enterprise.",
+    desc: "Integration guides for developers.",
     href: "https://docs.dhurta.com/api",
-    icon: "⚙️",
+    icon: Terminal,
   },
   {
     label: "Security Advisories",
     desc: "Vulnerabilities, CVEs, and patches.",
     href: "https://docs.dhurta.com/security",
-    icon: "🔒",
+    icon: ShieldAlert,
   },
 ];
 
@@ -104,7 +107,9 @@ export default function DocsPreview() {
                 onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(74,158,255,0.45)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(74,158,255,0.18)"; }}
               >
-                <div style={{ fontSize: "1.5rem", marginBottom: "0.65rem" }}>{link.icon}</div>
+                <div style={{ marginBottom: "0.65rem", color: "var(--blue)" }}>
+                  <link.icon size={22} strokeWidth={1.5} />
+                </div>
                 <h3 style={{
                   fontFamily: "var(--font-tech)",
                   fontWeight: 600,

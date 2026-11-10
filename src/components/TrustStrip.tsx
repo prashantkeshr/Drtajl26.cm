@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
+import { ShieldCheck, Code2, EyeOff, UserX, Globe } from "lucide-react";
 
 const BADGES = [
-  { icon: "⬇", text: "10K+ Downloads" },
-  { icon: "⚖", text: "MIT License" },
-  { icon: "⊘", text: "Zero Telemetry" },
-  { icon: "👤", text: "No Accounts" },
-  { icon: "⌥", text: "Open Source" },
+  { icon: ShieldCheck, text: "Privacy Native" },
+  { icon: Code2, text: "Open Source" },
+  { icon: EyeOff, text: "Zero Telemetry" },
+  { icon: UserX, text: "No Accounts" },
+  { icon: Globe, text: "Sovereign Infrastructure" },
 ];
 
 export default function TrustStrip() {
@@ -21,7 +22,7 @@ export default function TrustStrip() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.07 }}
           >
-            <span style={{ opacity: 0.9 }}>{b.icon}</span>
+            <b.icon size={13} strokeWidth={1.75} style={{ opacity: 0.85, flexShrink: 0 }} />
             {b.text}
           </motion.span>
         ))}

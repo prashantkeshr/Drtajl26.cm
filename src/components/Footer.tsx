@@ -20,30 +20,57 @@ export default function Footer() {
             Dhurta — धूर्त, "clever". Products built on Trust, Technology and Culture.
           </p>
 
-          <div style={{ marginTop: "1.5rem" }}>
-            <p style={{ fontSize: "0.82rem", color: "var(--gray-light)", opacity: 0.75, marginBottom: "0.6rem" }}>
-              Release updates & security advisories
-            </p>
-            <form
-              className="newsletter-form"
-              onSubmit={(e) => e.preventDefault()}
+          <div style={{ marginTop: "1.5rem", display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+            <a
+              href="https://github.com/prashantkeshr/drtajl26.n"
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                fontFamily: "var(--font-tech)",
+                fontSize: "0.78rem",
+                fontWeight: 500,
+                color: "var(--teal)",
+                border: "1px solid rgba(0,212,170,0.25)",
+                padding: "0.4rem 0.9rem",
+                borderRadius: "999px",
+                transition: "border-color 0.2s",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(0,212,170,0.6)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(0,212,170,0.25)"; }}
             >
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className="newsletter-form__input"
-              />
-              <button type="submit" className="newsletter-form__btn">
-                Subscribe
-              </button>
-            </form>
+              GitHub ↗
+            </a>
+            <a
+              href="https://dhurta.org"
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                fontFamily: "var(--font-tech)",
+                fontSize: "0.78rem",
+                fontWeight: 500,
+                color: "var(--gold)",
+                border: "1px solid rgba(201,168,76,0.25)",
+                padding: "0.4rem 0.9rem",
+                borderRadius: "999px",
+                transition: "border-color 0.2s",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(201,168,76,0.6)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(201,168,76,0.25)"; }}
+            >
+              dhurta.org ↗
+            </a>
           </div>
         </motion.div>
 
         <div className="footer__cols">
           <div className="footer__col">
-            <h4 className="footer__col-title">Products</h4>
-            <a href="https://products.dhurta.com" target="_blank" rel="noreferrer">All Products ↗</a>
+            <h4 className="footer__col-title">Ecosystem</h4>
             <a href="https://browser.dhurta.com" target="_blank" rel="noreferrer">Dhurta Browser ↗</a>
             <a href="https://connect.dhurta.com" target="_blank" rel="noreferrer">Dhurta Connect ↗</a>
             <a href="https://setu.dhurta.com" target="_blank" rel="noreferrer">Dhurta Setu ↗</a>
@@ -63,7 +90,8 @@ export default function Footer() {
           <div className="footer__col">
             <h4 className="footer__col-title">Dhurta Group</h4>
             <a href="https://dhurta.org" target="_blank" rel="noreferrer">dhurta.org ↗</a>
-            <a href="https://dhurta.com" target="_blank" rel="noreferrer">dhurta.com</a>
+            <a href="https://dhurta.in" target="_blank" rel="noreferrer">dhurta.in ↗</a>
+            <a href="mailto:hello@dhurta.org">hello@dhurta.org</a>
           </div>
         </div>
       </div>

@@ -3,10 +3,10 @@ import { useState } from "react";
 import "./Nav.css";
 
 const LINKS = [
-  { href: "#products", label: "Products" },
-  { href: "#browser", label: "Browser" },
-  { href: "#connect", label: "Connect" },
-  { href: "#setu", label: "Setu" },
+  { href: "#products", label: "Ecosystem" },
+  { href: "#manifesto", label: "Manifesto" },
+  { href: "#docs", label: "Docs" },
+  { href: "#support", label: "Support" },
 ];
 
 export default function Nav() {
@@ -46,14 +46,14 @@ export default function Nav() {
           </a>
         </nav>
         <motion.a
-          href="https://github.com/prashantkeshr/Dhurta/releases"
+          href="https://github.com/prashantkeshr/drtajl26.n"
           target="_blank"
           rel="noreferrer"
           className="nav__cta"
           whileHover={{ scale: 1.045 }}
           whileTap={{ scale: 0.97 }}
         >
-          Download Browser
+          GitHub ↗
         </motion.a>
       </div>
       <motion.div className="nav__progress" style={{ scaleX: progress }} />
